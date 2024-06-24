@@ -1,43 +1,70 @@
-const contactsArray = [
-  {
-    id: "1",
-    firstName: "Paul",
-    lastName: "Lam",
-  },
-  {
-    id: "2",
-    firstName: "John",
-    lastName: "Smith",
-  },
-  {
-    id: "3",
-    firstName: "Jane",
-    lastName: "Doe",
-  },
-];
+import find from "lodash.find";
+import remove from "lodash.remove";
+import { people, cars } from "./peopleCarsScheme";
 
 const typeDefs = `
-    type Contact {
+    type Person {
       id: String!
       firstName: String
       lastName: String
     }
   
     type Query {
-      contact(id: String!): Contact
-      contacts: [Contact]
+      person(id: String!): Person
+      persons: [Person]
     }
   
     type Mutation {
-      addContact(id: String!, firstName: String!, lastName: String!): Contact
-      updateContact(id: String!, firstName: String!, lastName: String!): Contact
-      removeContact(id: String!): Contact
+      addPerson(id: String!, firstName: String!, lastName: String!): Person
+      updatePerson(id: String!, firstName: String!, lastName: String!): Person
+      removePerson(id: String!): Person
     }
   `;
 
 const resolvers = {
   Query: {
-    contacts: () => contactsArray,
+    persons: () => people,
+    person(root, args) {
+      return find(people, { id: args.id });
+    },
+  },
+  Mutation: {
+    addPerson: (root, args) => {
+      const newPerson = {
+        id: args.id,
+        firstName: args.firstName,
+        lastName: args.lastName,
+      };
+
+      people.push(newPerson);
+
+      return newPerson;
+    },
+    updatePerson: (root, args) => {
+      const person = find(people, { id: args.id });
+
+      if (!person) {
+        throw Error(`Couldn\'t find person with id ${args.id}`);
+      }
+
+      person.firstName = args.firstName;
+      person.lastName = args.lastName;
+
+      return person;
+    },
+    removePerson: (root, args) => {
+      const removedPerson = find(people, { id: args.id });
+
+      if (!removedPerson) {
+        throw Error(`Couldn\'t find person with id ${args.id}`);
+      }
+
+      remove(people, (c) => {
+        return c.id == removedPerson.id;
+      });
+
+      return removedPerson;
+    },
   },
 };
 
