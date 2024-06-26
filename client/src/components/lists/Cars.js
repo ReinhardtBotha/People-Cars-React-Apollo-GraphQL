@@ -4,9 +4,9 @@ import { GET_CAR_BY_PERSON } from "../../graphql/queries";
 import CarCard from "../listItems/CarCard";
 
 const Cars = (props) => {
-  const { id } = props;
+  const { personId } = props;
   const { loading, error, data } = useQuery(GET_CAR_BY_PERSON, {
-    variables: { personId: id },
+    variables: { personId: personId },
   });
 
   if (loading) return "Loading...";

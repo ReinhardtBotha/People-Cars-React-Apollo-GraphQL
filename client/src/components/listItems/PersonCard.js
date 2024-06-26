@@ -20,7 +20,7 @@ const PersonCard = (props) => {
         <EditOutlined key="delete" onClick={handleButtonClick} />,
       ]}
     >
-      <Cars id={id} />
+      <Cars personId={id} />
     </Card>
   );
 };
