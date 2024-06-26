@@ -1,11 +1,11 @@
 import { Divider } from "antd";
 
-const Title = ({ text }) => {
+const Heading = ({ text }) => {
   const styles = getStyles();
   return (
-    <div style={styles.container}>
+    <Divider>
       <h1 style={styles.title}>{text}</h1>
-    </div>
+    </Divider>
   );
 };
 
@@ -14,10 +14,6 @@ const getStyles = () => ({
     fontSize: 20,
     color: "#2a2a2a",
   },
-  container: {
-    width: "100%",
-    textAlign: "center",
-  },
 });
 
-export default Title;
+export default Heading;

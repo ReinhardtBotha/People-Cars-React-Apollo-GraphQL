@@ -13,7 +13,7 @@ const App = () => {
   return (
     <ApolloProvider client={client}>
       <div className="App">
-        <Title />
+        <Title text={"PEOPLE AND THEIR CARS"} />
         <AddPerson />
         <People />
       </div>
