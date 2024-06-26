@@ -1,5 +1,6 @@
 import find from "lodash.find";
 import remove from "lodash.remove";
+import filter from "lodash.filter";
 import { people, cars } from "./peopleCarsScheme";
 
 const typeDefs = `
@@ -8,10 +9,22 @@ const typeDefs = `
       firstName: String
       lastName: String
     }
+
+    type Car {
+      id: String!
+      year: String
+      make: String
+      model: String
+      price: String
+      personId: String
+    }
   
     type Query {
       person(id: String!): Person
       persons: [Person]
+      car(id: String!): Car
+      cars: [Car]
+      personCars(personId: String!): [Car]
     }
   
     type Mutation {
@@ -26,6 +39,13 @@ const resolvers = {
     persons: () => people,
     person(root, args) {
       return find(people, { id: args.id });
+    },
+    cars: () => cars,
+    car(root, args) {
+      return find(cars, { id: args.id });
+    },
+    personCars(root, args) {
+      return filter(cars, { personId: args.personId });
     },
   },
   Mutation: {
