@@ -2,6 +2,7 @@ import { Card } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import Cars from "../lists/Cars";
+import RemoveItem from "../buttons/RemoveItem";
 
 const PersonCard = (props) => {
   const [editMode, setEditMode] = useState(false);
@@ -17,7 +18,7 @@ const PersonCard = (props) => {
       title={firstName + " " + lastName}
       actions={[
         <EditOutlined key="edit" onClick={handleButtonClick} />,
-        <EditOutlined key="delete" onClick={handleButtonClick} />,
+        <RemoveItem id={id} type="person" />,
       ]}
     >
       <Cars personId={id} />

@@ -13,6 +13,7 @@ export const GET_PERSON = gql`
 export const GET_CAR_BY_PERSON = gql`
   query PersonCars($personId: String!) {
     personCars(personId: $personId) {
+      id
       year
       make
       model
@@ -22,11 +23,27 @@ export const GET_CAR_BY_PERSON = gql`
 `;
 
 export const ADD_PERSON = gql`
-  mutation AddContact($id: String!, $firstName: String!, $lastName: String!) {
-    addContact(id: $id, firstName: $firstName, lastName: $lastName) {
+  mutation AddPerson($id: String!, $firstName: String!, $lastName: String!) {
+    addPerson(id: $id, firstName: $firstName, lastName: $lastName) {
       id
       firstName
       lastName
+    }
+  }
+`;
+
+export const REMOVE_PERSON = gql`
+  mutation RemovePerson($id: String!) {
+    removePerson(id: $id) {
+      id
+    }
+  }
+`;
+
+export const REMOVE_CAR = gql`
+  mutation RemoveCar($id: String!) {
+    removeCar(id: $id) {
+      id
     }
   }
 `;

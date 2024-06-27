@@ -10,7 +10,7 @@ const AddPerson = () => {
   const [form] = Form.useForm();
   const [, forceUpdate] = useState();
 
-  const [addContact] = useMutation(ADD_PERSON);
+  const [addPerson] = useMutation(ADD_PERSON);
 
   useEffect(() => {
     forceUpdate({});
@@ -19,20 +19,20 @@ const AddPerson = () => {
   const onFinish = (values) => {
     const { firstName, lastName } = values;
 
-    addContact({
+    addPerson({
       variables: {
         id,
         firstName,
         lastName,
       },
-      update: (cache, { data: { addContact } }) => {
+      update: (cache, { data: { addPerson } }) => { 
         const data = cache.readQuery({ query: GET_PERSON });
 
         cache.writeQuery({
           query: GET_PERSON,
           data: {
             ...data,
-            contacts: [...data.contacts, addContact],
+            persons: [...data.persons, addPerson],
           },
         });
       },
@@ -73,7 +73,7 @@ const AddPerson = () => {
                   .length
               }
             >
-              Add Contact
+              Add Person
             </Button>
           )}
         </Form.Item>

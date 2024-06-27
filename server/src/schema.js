@@ -31,6 +31,7 @@ const typeDefs = `
       addPerson(id: String!, firstName: String!, lastName: String!): Person
       updatePerson(id: String!, firstName: String!, lastName: String!): Person
       removePerson(id: String!): Person
+      removeCar(id: String!): Car
     }
   `;
 
@@ -84,6 +85,19 @@ const resolvers = {
       });
 
       return removedPerson;
+    },
+    removeCar: (root, args) => {
+      const removedCar = find(cars, { id: args.id });
+
+      if (!removedCar) {
+        throw Error(`Couldn\'t find car with id ${args.id}`);
+      }
+
+      remove(cars, (c) => {
+        return c.id == removedCar.id;
+      });
+
+      return removedCar;
     },
   },
 };
