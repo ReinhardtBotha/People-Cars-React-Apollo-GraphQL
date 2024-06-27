@@ -1,11 +1,12 @@
 import { Card } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { useState } from "react";
+import RemoveItem from "../buttons/RemoveItem";
 
 const CarCard = (props) => {
   const [editMode, setEditMode] = useState(false);
 
-  const { year, make, model, price } = props;
+  const { id, year, make, model, price, personId } = props;
   const priceFormatted = Number(price).toLocaleString();
   const styles = getStyles();
 
@@ -19,7 +20,7 @@ const CarCard = (props) => {
       style={styles.card}
       actions={[
         <EditOutlined key="edit" onClick={handleButtonClick} />,
-        <EditOutlined key="delete" onClick={handleButtonClick} />,
+        <RemoveItem id={id} personId={personId} type="car" />,
       ]}
     >
       {year} {make} {model} {"-> $"}

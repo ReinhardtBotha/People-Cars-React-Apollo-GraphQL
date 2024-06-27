@@ -18,6 +18,7 @@ export const GET_CAR_BY_PERSON = gql`
       make
       model
       price
+      personId
     }
   }
 `;

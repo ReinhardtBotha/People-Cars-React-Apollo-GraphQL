@@ -16,7 +16,14 @@ const Cars = (props) => {
     <List grid={{ gutter: 20, column: 1 }}>
       {data.personCars.map(({ year, make, model, price, id }) => (
         <List.Item key={id}>
-          <CarCard year={year} make={make} model={model} price={price} />
+          <CarCard
+            id={id}
+            year={year}
+            make={make}
+            model={model}
+            price={price}
+            personId={personId}
+          />
         </List.Item>
       ))}
     </List>
