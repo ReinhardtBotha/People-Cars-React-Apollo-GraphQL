@@ -25,7 +25,7 @@ const AddPerson = () => {
         firstName,
         lastName,
       },
-      update: (cache, { data: { addPerson } }) => { 
+      update: (cache, { data: { addPerson } }) => {
         const data = cache.readQuery({ query: GET_PERSON });
 
         cache.writeQuery({
@@ -43,7 +43,7 @@ const AddPerson = () => {
     <div>
       <Heading text="Add Person" />
       <Form
-        name="add-contact-form"
+        name="add-person-form"
         layout="inline"
         size="large"
         style={{ marginBottom: "40px" }}
@@ -51,16 +51,18 @@ const AddPerson = () => {
         onFinish={onFinish}
       >
         <Form.Item
+          label="First Name"
           name="firstName"
           rules={[{ required: true, message: "Please enter a first name" }]}
         >
-          <Input placeholder="i.e. John" />
+          <Input placeholder="First Name" />
         </Form.Item>
         <Form.Item
+          label="Last Name"
           name="lastName"
           rules={[{ required: true, message: "Please enter a last name" }]}
         >
-          <Input placeholder="i.e. Smith" />
+          <Input placeholder="Last Name" />
         </Form.Item>
         <Form.Item shouldUpdate={true}>
           {() => (

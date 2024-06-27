@@ -32,6 +32,7 @@ const typeDefs = `
       updatePerson(id: String!, firstName: String!, lastName: String!): Person
       removePerson(id: String!): Person
       removeCar(id: String!): Car
+      addCar(id: String!, year: String!, make: String!, model: String!, price: String!, personId: String!): Car
     }
   `;
 
@@ -98,6 +99,20 @@ const resolvers = {
       });
 
       return removedCar;
+    },
+    addCar: (root, args) => {
+      const newCar = {
+        id: args.id,
+        year: args.year,
+        make: args.make,
+        model: args.model,
+        price: args.price,
+        personId: args.personId,
+      };
+
+      cars.push(newCar);
+
+      return newCar;
     },
   },
 };
