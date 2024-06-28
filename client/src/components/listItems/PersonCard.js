@@ -4,6 +4,7 @@ import { useState } from "react";
 import Cars from "../lists/Cars";
 import RemoveItem from "../buttons/RemoveItem";
 import UpdatePerson from "../forms/UpdatePerson";
+import { Link } from "react-router-dom";
 
 const PersonCard = (props) => {
   const [editMode, setEditMode] = useState(false);
@@ -32,6 +33,7 @@ const PersonCard = (props) => {
           ]}
         >
           <Cars personId={id} />
+          <Link to={`/people/${id}`}>Learn More</Link>
         </Card>
       )}
     </div>

@@ -39,7 +39,7 @@ const Show = () => {
                 <Typography.Text>Year: </Typography.Text> {item.year}
                 <Typography.Text> Make: </Typography.Text> {item.make}
                 <Typography.Text> Model: </Typography.Text> {item.model}
-                <Typography.Text> Price: </Typography.Text> {item.price}
+                <Typography.Text> Price: $</Typography.Text> {Number(item.price).toLocaleString()}
               </List.Item>
             )}
           />
