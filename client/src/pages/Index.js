@@ -5,19 +5,15 @@ import AddPerson from "../components/forms/AddPerson";
 import AddCar from "../components/forms/AddCar";
 import Heading from "../components/layout/Heading";
 
-
-
 const Home = () => {
   return (
-    
-      <div className="App">
-        <Title text={"PEOPLE AND THEIR CARS"} />
-        <AddPerson />
-        <AddCar />
-        <Heading text="Records" />
-        <People />
-      </div>
-   
+    <div className="App">
+      <Title text={"PEOPLE AND THEIR CARS"} />
+      <AddPerson />
+      <AddCar />
+      <Heading text="Records" />
+      <People />
+    </div>
   );
 };
 

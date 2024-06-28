@@ -18,6 +18,13 @@ const typeDefs = `
       price: String
       personId: String
     }
+
+    type PersonWithCars {
+      id: String!
+      firstName: String
+      lastName: String
+      cars: [Car]
+    }
   
     type Query {
       person(id: String!): Person
@@ -25,6 +32,7 @@ const typeDefs = `
       car(id: String!): Car
       cars: [Car]
       personCars(personId: String!): [Car]
+      personWithCars(id: String!): PersonWithCars
     }
   
     type Mutation {
@@ -49,6 +57,19 @@ const resolvers = {
     },
     personCars(root, args) {
       return filter(cars, { personId: args.personId });
+    },
+    personWithCars(root, args) {
+      const person = find(people, { id: args.id });
+      if (!person) {
+        throw new Error(`Person with id ${args.id} not found`);
+      }
+
+      const personCars = filter(cars, { personId: args.id });
+
+      return {
+        ...person,
+        cars: personCars,
+      };
     },
   },
   Mutation: {

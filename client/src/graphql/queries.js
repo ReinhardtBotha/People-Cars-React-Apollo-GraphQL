@@ -111,3 +111,21 @@ export const UPDATE_CAR = gql`
     }
   }
 `;
+
+export const GET_PERSON_WITH_CARS = gql`
+  query PersonWithCars($personWithCarsId: String!) {
+    personWithCars(id: $personWithCarsId) {
+      id
+      firstName
+      lastName
+      cars {
+        id
+        year
+        make
+        model
+        price
+        personId
+      }
+    }
+  }
+`;
