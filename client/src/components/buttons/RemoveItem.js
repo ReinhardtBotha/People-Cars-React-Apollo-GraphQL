@@ -1,5 +1,5 @@
 import { DeleteOutlined } from "@ant-design/icons";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import filter from "lodash.filter";
 import {
   GET_PERSON,
@@ -13,6 +13,11 @@ const RemoveItem = ({ id, personId = null, type }) => {
     person: REMOVE_PERSON,
     car: REMOVE_CAR,
   };
+
+  const { data: carData } = useQuery(GET_CAR_BY_PERSON, {
+    variables: { personId: id },
+    skip: type !== 'person',
+  });
 
   const [removeItem] = useMutation(mutationMap[type], {
     update(
@@ -28,9 +33,21 @@ const RemoveItem = ({ id, personId = null, type }) => {
         cache.writeQuery({
           query: GET_PERSON,
           data: {
-            persons: filter(persons, (p) => p.id !== removedItem.id),
+            persons: filter(persons, (p) => p.id !== removedItem?.id),
           },
         });
+
+        if (carData) {
+          carData.personCars.forEach((car) => {
+            cache.modify({
+              fields: {
+                personCars(existingCars = []) {
+                  return existingCars.filter(c => c.__ref !== `Car:${car?.id}`);
+                }
+              }
+            });
+          });
+        }
       }
       if (type === "car") {
         const { personCars } = cache.readQuery({
@@ -42,7 +59,7 @@ const RemoveItem = ({ id, personId = null, type }) => {
           query: GET_CAR_BY_PERSON,
           variables: { personId },
           data: {
-            personCars: filter(personCars, (c) => c.id !== removedItem.id),
+            personCars: filter(personCars, (c) => c.id !== removedItem?.id),
           },
         });
       }
@@ -55,6 +72,15 @@ const RemoveItem = ({ id, personId = null, type }) => {
     );
 
     if (result) {
+      if (type === "person" && carData) {
+        carData.personCars.forEach((car) => {
+          removeItem({
+            variables: { id: car.id },
+            mutation: REMOVE_CAR,
+          });
+        });
+      }
+
       removeItem({
         variables: {
           id,

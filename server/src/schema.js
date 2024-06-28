@@ -33,6 +33,7 @@ const typeDefs = `
       removePerson(id: String!): Person
       removeCar(id: String!): Car
       addCar(id: String!, year: String!, make: String!, model: String!, price: String!, personId: String!): Car
+      updateCar(id: String!, year: String!, make: String!, model: String!, price: String!, personId: String!): Car
     }
   `;
 
@@ -113,6 +114,19 @@ const resolvers = {
       cars.push(newCar);
 
       return newCar;
+    },
+    updateCar: (root, args) => {
+      const car = find(cars, { id: args.id });
+
+      if (!car) {
+        throw Error(`Couldn\'t find car with id ${args.id}`);
+      }
+
+      car.year = args.year;
+      car.make = args.make;
+      car.model = args.model;
+      car.price = args.price;
+      car.personId = args.personId;
     },
   },
 };

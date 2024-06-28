@@ -85,10 +85,23 @@ export const ADD_CAR = gql`
     }
   }
 `;
-
-export const GET_CAR = gql`
-  {
-    cars {
+export const UPDATE_CAR = gql`
+  mutation UpdateCar(
+    $id: String!
+    $year: String!
+    $make: String!
+    $model: String!
+    $price: String!
+    $personId: String!
+  ) {
+    updateCar(
+      id: $id
+      year: $year
+      make: $make
+      model: $model
+      price: $price
+      personId: $personId
+    ) {
       id
       year
       make

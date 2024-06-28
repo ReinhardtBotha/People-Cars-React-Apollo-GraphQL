@@ -3,7 +3,7 @@ import Heading from "../layout/Heading";
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useMutation, useQuery } from "@apollo/client";
-import { ADD_CAR, GET_CAR, GET_PERSON } from "../../graphql/queries";
+import { ADD_CAR, GET_CAR_BY_PERSON, GET_PERSON } from "../../graphql/queries";
 
 const AddCar = () => {
   const [id] = useState(uuidv4());
@@ -37,15 +37,17 @@ const AddCar = () => {
         personId: owner,
       },
       update: (cache, { data: { addCar } }) => {
-        const data = cache.readQuery({ query: GET_CAR });
-
-        console.log(data);
+        const data = cache.readQuery({
+          query: GET_CAR_BY_PERSON,
+          variables: { personId: owner },
+        });
 
         cache.writeQuery({
-          query: GET_CAR,
+          query: GET_CAR_BY_PERSON,
+          variables: { personId: owner },
           data: {
             ...data,
-            cars: [...data.cars, addCar],
+            personCars: [...data.personCars, addCar],
           },
         });
       },
