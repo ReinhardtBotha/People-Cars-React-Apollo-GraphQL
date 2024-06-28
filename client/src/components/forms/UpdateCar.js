@@ -1,7 +1,11 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { Button, Form, Input, Select } from "antd";
 import { useEffect, useState } from "react";
-import { UPDATE_CAR, GET_PERSON } from "../../graphql/queries";
+import {
+  UPDATE_CAR,
+  GET_PERSON,
+  GET_CAR_BY_PERSON,
+} from "../../graphql/queries";
 
 const UpdateCar = (props) => {
   const { id, year, make, model, price, personId, onButtonClick } = props;
@@ -10,7 +14,7 @@ const UpdateCar = (props) => {
 
   const { Option } = Select;
   const { data } = useQuery(GET_PERSON);
-  const [owner, setOwner] = useState();
+  const [owner, setOwner] = useState(personId);
 
   const [updateCar] = useMutation(UPDATE_CAR);
 
@@ -34,6 +38,23 @@ const UpdateCar = (props) => {
         price,
         personId: owner,
       },
+      // update: (cache, { data: { updateCar } }) => {
+      //   const data = cache.readQuery({
+      //     query: GET_CAR_BY_PERSON,
+      //     variables: { personId: owner },
+      //   });
+
+      //   console.log("data:", data);
+
+      //   cache.writeQuery({
+      //     query: GET_CAR_BY_PERSON,
+      //     variables: { personId: owner },
+      //     data: {
+      //       ...data,
+      //       personCars: [...data.personCars, updateCar],
+      //     },
+      //   });
+      // },
     });
     onButtonClick();
   };
@@ -48,7 +69,7 @@ const UpdateCar = (props) => {
         make,
         model,
         price,
-        personId,
+        person: personId,
       }}
       onFinish={onFinish}
     >
